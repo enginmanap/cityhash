@@ -27,8 +27,7 @@
 // possible hash functions, by using SIMD instructions, or by
 // compromising on hash quality.
 
-#include "config.h"
-#include <city.h>
+#include "city.h"
 
 #include <algorithm>
 #include <string.h>  // for memcpy and memset
@@ -48,6 +47,12 @@ static uint32 UNALIGNED_LOAD32(const char *p) {
 }
 
 #ifdef _MSC_VER
+
+#include <stdlib.h>
+#define bswap_32(x) _byteswap_ulong(x)
+#define bswap_64(x) _byteswap_uint64(x)
+
+#elif defined(__MINGW64__) || defined(__MINGW32__)
 
 #include <stdlib.h>
 #define bswap_32(x) _byteswap_ulong(x)
